@@ -32,7 +32,7 @@ const initLiveReact = function () {
   const container = document.createElement("div");
   container.id = "live-react-wrapper";
   const root = createRoot(container);
-  document.appendChild(container);
+  document.querySelector("[phx-main]").appendChild(container);
   const elements = document.querySelectorAll("[data-live-react-class]");
   Array.prototype.forEach.call(elements, (el) => {
     initLiveReactElement(el, root);
