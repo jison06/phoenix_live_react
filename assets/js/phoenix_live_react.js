@@ -32,6 +32,7 @@ const initLiveReact = function () {
   const container = document.createElement("div");
   container.id = "live-react-wrapper";
   const root = createRoot(container);
+  document.appendChild(root);
   const elements = document.querySelectorAll("[data-live-react-class]");
   Array.prototype.forEach.call(elements, (el) => {
     initLiveReactElement(el, root);
@@ -41,10 +42,13 @@ const initLiveReact = function () {
 const LiveReact = {
   mounted() {
     const { el } = this;
+    const root = document.getElementById("live-react-wrapper");
     const pushEvent = this.pushEvent.bind(this);
     const pushEventTo = this.pushEventTo && this.pushEventTo.bind(this);
     const handleEvent = this.handleEvent && this.handleEvent.bind(this);
-    const { target, componentClass } = initLiveReactElement(el, { pushEvent });
+    const { target, componentClass } = initLiveReactElement(el, root, {
+      pushEvent,
+    });
     const props = render(el, target, componentClass, {
       pushEvent,
       pushEventTo,
