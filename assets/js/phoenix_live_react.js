@@ -29,8 +29,9 @@ const initLiveReactElement = function (el, root, additionalProps) {
 };
 
 const initLiveReact = function () {
-  const root = document.createElement("div");
-  root.id = "live-react-wrapper";
+  const container = document.createElement("div");
+  container.id = "live-react-wrapper";
+  const root = createRoot(container);
   const elements = document.querySelectorAll("[data-live-react-class]");
   Array.prototype.forEach.call(elements, (el) => {
     initLiveReactElement(el, root);
