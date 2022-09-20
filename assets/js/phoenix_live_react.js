@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 
 const render = function (
   el,
-  target,
+  root,
   componentClass,
   additionalProps = {},
   previousProps = {}
@@ -17,22 +17,23 @@ const render = function (
     props = { ...props, ...additionalProps };
   }
   const reactElement = React.createElement(componentClass, props);
-  const root = createRoot(target);
   root.render(reactElement);
   return props;
 };
 
-const initLiveReactElement = function (el, additionalProps) {
+const initLiveReactElement = function (el, root, additionalProps) {
   const target = el.nextElementSibling;
   const componentClass = eval(el.dataset.liveReactClass);
-  render(el, target, componentClass, additionalProps);
+  render(el, root, componentClass, additionalProps);
   return { target: target, componentClass: componentClass };
 };
 
 const initLiveReact = function () {
+  const root = document.createElement("div");
+  root.id = "live-react-wrapper";
   const elements = document.querySelectorAll("[data-live-react-class]");
   Array.prototype.forEach.call(elements, (el) => {
-    initLiveReactElement(el);
+    initLiveReactElement(el, root);
   });
 };
 
